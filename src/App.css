@@ -47,12 +47,16 @@
   }
 }
 
-.App .right-answer {
+.App .right-answer, .App .right-answer:hover {
   background-color: lightgreen;
   color: white;
 }
 
-.App .wrong-answer {
+.App .wrong-answer, .App .wrong-answer:hover  {
   background-color: tomato;
   color: white;
+}
+
+.App .wrong-answer:hover, .App .right-answer:hover {
+  opacity: .5;
 }
