@@ -4,9 +4,8 @@ import './App.css';
 import Grid from '@material-ui/core/Grid';
 import data from './data';
 import { Button, withStyles } from '@material-ui/core';
-import { Route, BrowserRouter as Router, Link, Switch } from 'react-router-dom';
+import { Route, Router } from 'react-router-dom';
 import AddQuestion from './addQuestion';
-import Quiz from './quiz';
 
 const StyledButton = withStyles({
   root: {
@@ -23,7 +22,7 @@ const StyledButton = withStyles({
   },
 })(Button);
 
-function App() {
+function Quiz() {
   const [markAnswers, setMarkAnswers] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [selectedQuestion, setSelectedQuestion] = useState(0);
@@ -51,23 +50,22 @@ function App() {
   }
 
   return (
-    <Router>
-      <div>
-        
+    <div className="App">
+      <header className="App-header">
+        {data.map((entry, i) => <div key={i} hidden={i !== selectedQuestion}><Grid spacing={3} container>
+          <Grid item lg={12} md={12}>
+            {entry.text}
+          </Grid>
+          {entry.answers.map((answer, i) => <Grid  className="answer" key={i} item lg={6} md={6}><Button className="answer" onClick={() => checkAnswer(answer)} className={getAnswerStyle(answer)} variant="contained">{answer.text}</Button></Grid>)}
+        </Grid>
+        </div>)}
+        <div hidden={selectedQuestion >= data.length - 1} >
+        <StyledButton variant="contained" onClick={nextAnswer}>WEITER</StyledButton>
 
-        {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
-        <Switch>
-          <Route path="/quiz">
-            <Quiz />
-          </Route>
-          <Route path="/add">
-            <AddQuestion />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+        </div>
+      </header>
+    </div>
   );
 }
 
-export default App;
+export default Quiz;
